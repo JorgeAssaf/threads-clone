@@ -13,7 +13,10 @@ export default async function Home() {
     data: { session },
   } = await supabase.auth.getSession()
 
-  const { data: posts } = await supabase.from('threads').select('*, users(*)')
+  const { data: posts } = await supabase
+    .from('threads')
+    .select('*, users(*)')
+    .order('created_at', { ascending: false })
   if (!session || !posts) {
     redirect('/auth')
   }
@@ -32,7 +35,7 @@ export default async function Home() {
                   <Fragment key={post.id}>
                     <div className='flex justify-start space-x-2 '>
                       <Image
-                        src={post.users?.avatar_url ?? '/avatar.png'}
+                        src={post.users?.avatar_url ?? ''}
                         alt='avatar'
                         width={36}
                         height={36}
@@ -44,6 +47,22 @@ export default async function Home() {
                         {post.users?.full_name}
                       </h2>
                       <p>{post.text}</p>
+                      <div>
+                        {post.images
+                          ? post.images?.map((url, i) => {
+                            return (
+                              <Image
+                                key={i + url}
+                                src={url}
+                                alt={url}
+                                width={306}
+                                height={306}
+                                className='aspect-auto rounded-md'
+                              />
+                            )
+                          })
+                          : null}
+                      </div>
                     </div>
                   </Fragment>
                 )
