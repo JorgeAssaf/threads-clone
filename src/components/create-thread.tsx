@@ -2,10 +2,14 @@
 
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-import { type Session } from '@supabase/auth-helpers-nextjs'
+import {
+  createClientComponentClient,
+  type Session,
+} from '@supabase/auth-helpers-nextjs'
 import { Hash, ImageIcon, MenuSquareIcon, X } from 'lucide-react'
 import { toast } from 'sonner'
 
+import { type Database } from '@/types/database.types'
 import {
   Dialog,
   DialogContent,
@@ -28,6 +32,8 @@ export const CreateThread = ({ session }: { session: Session }) => {
   const inputFileRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
 
+  const supabase = createClientComponentClient<Database>()
+
   const handleOpenFile = () => {
     inputFileRef.current?.click()
 
@@ -41,7 +47,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
     if (files) {
       const filesWithPreview = Array.from(files).map((file) => {
         return Object.assign(file, {
-          path: file.name.replace(/\s/g, '-').toLowerCase(),
+          path: file.name.replace(/\s/g, '-').toLowerCase() + Date.now(),
           preview: URL.createObjectURL(file),
         })
       })
@@ -97,14 +103,41 @@ export const CreateThread = ({ session }: { session: Session }) => {
                             toast.error('Post body is required!')
                             return
                           }
-                          await addPost(formData)
-                          setOpen(false)
-                          toast.promise(addPost(formData), {
+                          const urls = []
+                          for (const image of selectedFile || []) {
+                            const { data, error } = await supabase.storage
+                              .from('photos')
+                              .upload(`${image.path}`, image as unknown as File)
+
+                            if (error) {
+                              console.error(
+                                'Error al subir la imagen:',
+                                error.message,
+                              )
+                            } else {
+                              console.log(
+                                'Imagen subida correctamente:',
+                                data.path,
+                              )
+                              // Guarda la URL en el estado
+                              const {
+                                data: { publicUrl },
+                              } = supabase.storage
+                                .from('photos')
+                                .getPublicUrl(`${image.path}`)
+                              urls.push(publicUrl)
+                            }
+                          }
+                          toast.promise(addPost(formData, urls), {
                             loading: 'Posting...',
-                            success: 'Posted !',
+                            success: () => {
+                              formRef.current?.reset()
+                              setOpen(false)
+                              setSelectedFile(null)
+                              return 'Posted!'
+                            },
                             error: 'Error',
                           })
-                          formRef.current?.reset()
                         } catch (error) {
                           if (error instanceof Error) {
                             toast.error('Post failed!')
@@ -160,7 +193,14 @@ export const CreateThread = ({ session }: { session: Session }) => {
                                       }
                                     />
                                   </div>
-                                  <img src={file.preview} alt={file.path} />
+
+                                  <Image
+                                    src={file.preview}
+                                    alt='preview'
+                                    width={200}
+                                    height={200}
+                                    className='rounded-md object-cover'
+                                  />
                                 </div>
                               )
                             })}
