@@ -8,7 +8,10 @@ import { type Database } from '@/types/database.types'
 import { CreateThread } from '@/components/create-thread'
 
 export default async function Home() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore
+  })
   const {
     data: { session },
   } = await supabase.auth.getSession()

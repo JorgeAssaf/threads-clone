@@ -8,7 +8,10 @@ import { SiteHeader } from '@/components/layout/site-header'
 export default async function PostsLayout({
   children,
 }: React.PropsWithChildren) {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore
+  })
   const {
     data: { session },
   } = await supabase.auth.getSession()

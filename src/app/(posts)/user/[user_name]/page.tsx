@@ -6,7 +6,10 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { type Database } from '@/types/database.types'
 
 export default async function UserPage() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient<Database>({
+    cookies: () => cookieStore
+  })
   const {
     data: { session },
   } = await supabase.auth.getSession()
