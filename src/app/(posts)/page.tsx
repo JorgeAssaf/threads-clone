@@ -5,12 +5,13 @@ import { redirect } from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
 import { type Database } from '@/types/database.types'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { CreateThread } from '@/components/create-thread'
 
 export default async function Home() {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({
-    cookies: () => cookieStore
+    cookies: () => cookieStore,
   })
   const {
     data: { session },
@@ -37,35 +38,46 @@ export default async function Home() {
                 return (
                   <Fragment key={post.id}>
                     <div className='flex justify-start space-x-2 '>
-                      <Image
-                        src={post.users?.avatar_url ?? ''}
-                        alt='avatar'
-                        width={36}
-                        height={36}
-                        className='rounded-full'
-                      />
+                      <Avatar className='size-9'>
+                        <AvatarImage
+                          src={post.users?.avatar_url ?? ''}
+                          alt={post.users?.full_name ?? ''}
+                        />
+                        <AvatarFallback>
+                          {session.user?.user_metadata?.full_name
+                            .split(' ')[0]
+                            .charAt(0) +
+                            session.user?.user_metadata?.full_name
+                              .split(' ')[1]
+                              .charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
                     </div>
                     <div className='flex w-full flex-col space-y-2'>
                       <h2 className=' text-primary'>
                         {post.users?.full_name}
                       </h2>
                       <p>{post.text}</p>
-                      <div>
-                        {post.images
-                          ? post.images?.map((url, i) => {
-                            return (
+
+                      {post.images
+                        ? post.images?.map((url, i) => {
+                          return (
+                            <div
+                              className='aspect-[0.5579919215233698]  max-h-[430px]'
+                              key={i + url}
+                            >
                               <Image
-                                key={i + url}
                                 src={url}
                                 alt={url}
+                                priority
                                 width={306}
-                                height={306}
-                                className='aspect-auto rounded-md'
+                                height={430}
+                                className='max-h-[430px] w-auto rounded-md object-cover'
                               />
-                            )
-                          })
-                          : null}
-                      </div>
+                            </div>
+                          )
+                        })
+                        : null}
                     </div>
                   </Fragment>
                 )
