@@ -37,7 +37,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute='class' defaultTheme='system'>
           {children}
-          <Toaster />
+          <Toaster position='bottom-center' />
         </ThemeProvider>
       </body>
     </html>
