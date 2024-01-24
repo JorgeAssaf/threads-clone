@@ -88,4 +88,13 @@
     form-sizing: content;
   }
 }
+@layer components {
+  .zoom-image [data-rmiz-modal-overlay='visible'] {
+    @apply bg-background/10 backdrop-blur;
+  }
+
+  .zoom-image [data-rmiz-modal-img] {
+    @apply rounded-md lg:rounded-2xl;
+  }
+}
 

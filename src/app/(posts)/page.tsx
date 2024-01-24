@@ -1,12 +1,14 @@
 import { Fragment } from 'react'
 import { cookies } from 'next/headers'
-import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
 import { type Database } from '@/types/database.types'
+import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/carousel'
 import { CreateThread } from '@/components/create-thread'
+import { ZoomImage } from '@/components/zoom-image'
 
 export default async function Home() {
   const cookieStore = cookies()
@@ -58,26 +60,36 @@ export default async function Home() {
                         {post.users?.full_name}
                       </h2>
                       <p>{post.text}</p>
-
-                      {post.images
-                        ? post.images?.map((url, i) => {
-                          return (
-                            <div
-                              className='aspect-[0.5579919215233698]  max-h-[430px]'
-                              key={i + url}
-                            >
-                              <Image
-                                src={url}
-                                alt={url}
-                                priority
-                                width={306}
-                                height={430}
-                                className='max-h-[430px] w-auto rounded-md object-cover'
-                              />
-                            </div>
-                          )
-                        })
-                        : null}
+                      <Carousel>
+                        <CarouselContent>
+                          {post.images
+                            ? post.images?.map((url, i) => {
+                              return (
+                                <CarouselItem
+                                  key={i + url}
+                                  className={cn(
+                                    post.images?.length === 1
+                                      ? ''
+                                      : 'basis-1/2',
+                                  )}
+                                >
+                                  <ZoomImage>
+                                    {/* the next image component no used because not work with the zoom image component*/}
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                      src={url}
+                                      alt={url}
+                                      width={306}
+                                      height={500}
+                                      className='block aspect-auto max-h-[430px] w-auto rounded-md  object-cover'
+                                    />
+                                  </ZoomImage>
+                                </CarouselItem>
+                              )
+                            })
+                            : null}
+                        </CarouselContent>
+                      </Carousel>
                     </div>
                   </Fragment>
                 )
