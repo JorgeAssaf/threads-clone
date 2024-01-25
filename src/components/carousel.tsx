@@ -8,7 +8,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import AutoHeight from 'embla-carousel-auto-height'
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from 'embla-carousel-react'
@@ -53,7 +52,8 @@ const Carousel = forwardRef<
   React.HTMLAttributes<HTMLDivElement> & CarouselProps
 >(({ opts, plugins, orientation, setApi, children, ...props }, ref) => {
   const [carouselRef, api] = useEmblaCarousel(
-    { ...opts, axis: orientation === 'vertical' ? 'y' : 'x' }, [...(plugins || [])],
+    { ...opts, axis: orientation === 'vertical' ? 'y' : 'x' },
+    [...(plugins || [])],
   )
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
