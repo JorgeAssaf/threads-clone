@@ -7,6 +7,7 @@ import { links } from '@/config/site'
 import { cn } from '@/lib/utils'
 
 import { MenuIcon, Profile, ThreadsLogo } from '../icons'
+import { Button } from '../ui/button'
 
 export interface User {
   user: string
@@ -37,8 +38,6 @@ export const SiteHeader = ({ user }: User) => {
             </Link>
           ))}
 
-
-
           <Link
             href={`/user/@${user}`}
             role='link'
@@ -52,9 +51,12 @@ export const SiteHeader = ({ user }: User) => {
         </nav>
 
         <div className='hidden justify-end md:flex'>
-          <Link href='/posts' role='link'>
+          <Button
+            variant={'ghost'}
+            className='fill-muted-foreground/50 transition-colors duration-75 hover:fill-foreground'
+          >
             <MenuIcon />
-          </Link>
+          </Button>
         </div>
       </div>
     </header>
