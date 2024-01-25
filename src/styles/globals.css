@@ -93,8 +93,25 @@
     @apply bg-background/10 backdrop-blur;
   }
 
+  .zoom-image [data-rmiz-modal-content] > button {
+    @apply absolute right-0 top-0 m-4 flex items-center justify-center rounded-full bg-background/10 text-foreground;
+  }
+
   .zoom-image [data-rmiz-modal-img] {
     @apply rounded-md lg:rounded-2xl;
+  }
+  .zoom-image [data-rmiz-modal-overlay],
+  .zoom-image [data-rmiz-modal-img] {
+    transition: all 0.3s ease-in-out;
+  }
+  .zoom-image [data-rmiz-btn-unzoom] {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .zoom-image [data-rmiz-btn-zoom] {
+    background-color: #000;
+    color: #fff;
   }
 }
 
