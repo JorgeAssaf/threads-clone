@@ -81,7 +81,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
               Start a thread
             </Button>
           </DialogTrigger>
-          <DialogContent className='sm:max-w-lg'>
+          <DialogContent className='max-w-xs sm:max-w-lg rounded-lg'>
             <DialogHeader className='flex flex-col space-y-4'>
               <DialogTitle>New Thread</DialogTitle>
               <DialogDescription asChild>
@@ -102,7 +102,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
                       </AvatarFallback>
                     </Avatar>
                   </div>
-                  <div className='flex w-full flex-col justify-end'>
+                  <div className='flex w-full flex-col text-left'>
                     <h2 className='font-semibold text-primary'>
                       {session.user?.user_metadata?.full_name}
                     </h2>
@@ -190,34 +190,32 @@ export const CreateThread = ({ session }: { session: Session }) => {
                       <div className='relative mt-2 flex items-center space-x-2'>
                         {selectedFile ? (
                           <>
-                            {selectedFile.map((file) => {
-                              return (
-                                <div className='relative' key={file.preview}>
-                                  <div className='absolute right-0 top-1 rounded-full bg-background p-1 '>
-                                    <X
-                                      size={18}
-                                      className='text-primary'
-                                      onClick={() =>
-                                        setSelectedFile(
-                                          (prev) =>
-                                            prev?.filter(
-                                              (f) => f.path !== file.path,
-                                            ) || null,
-                                        )
-                                      }
-                                    />
-                                  </div>
-
-                                  <Image
-                                    src={file.preview}
-                                    alt='preview'
-                                    width={200}
-                                    height={200}
-                                    className='rounded-md object-cover'
+                            {selectedFile.map((file) => (
+                              <div className='relative' key={file.preview}>
+                                <div className='absolute right-0 top-1 rounded-full bg-background p-1 '>
+                                  <X
+                                    size={18}
+                                    className='text-primary'
+                                    onClick={() =>
+                                      setSelectedFile(
+                                        (prev) =>
+                                          prev?.filter(
+                                            (f) => f.path !== file.path,
+                                          ) || null,
+                                      )
+                                    }
                                   />
                                 </div>
-                              )
-                            })}
+
+                                <Image
+                                  src={file.preview}
+                                  alt='preview'
+                                  width={200}
+                                  height={200}
+                                  className='rounded-md object-cover '
+                                />
+                              </div>
+                            ))}
                           </>
                         ) : null}
                       </div>
