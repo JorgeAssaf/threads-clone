@@ -56,7 +56,6 @@ export default async function Home() {
                 <div className=''>
                   <h2 className='text-primary'>{post.users?.full_name}</h2>
                   <p>{post.text}</p>
-
                   <ImageCarousel images={post.images} />
                 </div>
               </div>
