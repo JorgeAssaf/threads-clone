@@ -23,7 +23,10 @@ import { addPost } from '@/app/_actions/post'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 
-export type FileWithPreview = { path: string; preview: string }
+export interface FileWithPreview extends File {
+  path: string
+  preview: string
+}
 
 export const CreateThread = ({ session }: { session: Session }) => {
   const [open, setOpen] = useState(false)
@@ -81,7 +84,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
               Start a thread
             </Button>
           </DialogTrigger>
-          <DialogContent className='max-w-xs sm:max-w-lg rounded-lg'>
+          <DialogContent className='max-w-xs rounded-lg sm:max-w-lg'>
             <DialogHeader className='flex flex-col space-y-4'>
               <DialogTitle>New Thread</DialogTitle>
               <DialogDescription asChild>
@@ -139,9 +142,10 @@ export const CreateThread = ({ session }: { session: Session }) => {
                               } = supabase.storage
                                 .from('photos')
                                 .getPublicUrl(`${image.path}`)
-                              urls.push(publicUrl)
+                              urls.push({ url: publicUrl, type: image.type })
                             }
                           }
+
                           toast.promise(addPost(formData, urls), {
                             loading: 'Posting...',
                             success: () => {
@@ -169,7 +173,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
                       <div className='mt-2 flex items-center space-x-2'>
                         <input
                           type='file'
-                          accept='image/*'
+                          accept={'image/*,video/*'}
                           multiple
                           hidden
                           ref={inputFileRef}
@@ -192,7 +196,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
                           <>
                             {selectedFile.map((file) => (
                               <div className='relative' key={file.preview}>
-                                <div className='absolute right-0 top-1 rounded-full bg-background p-1 '>
+                                <div className='absolute right-0 top-1 z-10 rounded-full bg-background p-1 '>
                                   <X
                                     size={18}
                                     className='text-primary'
@@ -207,13 +211,24 @@ export const CreateThread = ({ session }: { session: Session }) => {
                                   />
                                 </div>
 
-                                <Image
-                                  src={file.preview}
-                                  alt='preview'
-                                  width={200}
-                                  height={200}
-                                  className='rounded-md object-cover '
-                                />
+                                {file.type === 'video/mp4' ? (
+                                  <video
+                                    src={file.preview}
+                                    className=' rounded-lg object-cover'
+                                    autoPlay
+                                    height={200}
+                                    width={200}
+                                    muted
+                                  />
+                                ) : (
+                                  <Image
+                                    src={file.preview}
+                                    alt='preview'
+                                    width={200}
+                                    height={200}
+                                    className='rounded-md object-cover '
+                                  />
+                                )}
                               </div>
                             ))}
                           </>
