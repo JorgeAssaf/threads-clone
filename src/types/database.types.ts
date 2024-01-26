@@ -5,7 +5,13 @@ export type Json =
   | null
   | { [key: string]: Json | undefined }
   | Json[]
+  | File[]
 
+
+export interface ImagesFile {
+  url: string;
+  type: string;
+}
 
 export interface Database {
   public: {
@@ -15,7 +21,7 @@ export interface Database {
           created_at: string
           hashtag: string | null
           id: number
-          images: string[] | null
+          images: ImagesFile[] | null
           text: string | null
           update_at: string | null
           user_id: string | null
@@ -24,7 +30,7 @@ export interface Database {
           created_at?: string
           hashtag?: string | null
           id?: number
-          images?: Json | null
+          images?: { [key: string]: string | undefined }[] | null
           text?: string | null
           update_at?: string | null
           user_id?: string | null
@@ -55,6 +61,7 @@ export interface Database {
           full_name: string | null
           id: string
           name: string | null
+          user_name: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -62,6 +69,7 @@ export interface Database {
           full_name?: string | null
           id: string
           name?: string | null
+          user_name?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -69,6 +77,7 @@ export interface Database {
           full_name?: string | null
           id?: string
           name?: string | null
+          user_name?: string | null
         }
         Relationships: [
           {
