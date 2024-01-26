@@ -4,14 +4,16 @@ import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 
-import { type Database } from '@/types/database.types'
+import { type ImagesFile, type Database } from '@/types/database.types'
 
-export async function addPost(formdata: FormData, images: string[] | null) {
+export async function addPost(
+  formdata: FormData,
+  images: ImagesFile[]
+) {
   const cookieStore = cookies()
   const body = formdata.get('body')
 
   if (!body) return
-
   const supabase = createServerActionClient<Partial<Database>>({
     cookies: () => cookieStore,
   })
