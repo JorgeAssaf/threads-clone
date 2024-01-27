@@ -73,16 +73,26 @@ export const CreateThread = ({ session }: { session: Session }) => {
         </AvatarFallback>
       </Avatar>
 
-      <div>
+      <div className='w-full cursor-pointer'>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button
-              onClick={() => setOpen(true)}
-              variant='ghost'
-              className=' bg-transparent p-0 font-thin hover:bg-transparent'
-            >
-              Start a thread
-            </Button>
+          <DialogTrigger asChild >
+            <div className='flex items-center justify-between space-x-2'>
+
+              <Button
+                onClick={() => setOpen(true)}
+                variant='ghost'
+                className=' bg-transparent p-0 font-thin hover:bg-transparent'
+              >
+                Start a thread
+              </Button>
+
+
+              <Button
+                disabled
+                className='rounded-xl font-semibold px-4 py-1'>
+                Post
+              </Button>
+            </div>
           </DialogTrigger>
           <DialogContent className='max-w-xs rounded-lg sm:max-w-lg'>
             <DialogHeader className='flex flex-col space-y-4'>
@@ -244,6 +254,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
+
         </Dialog>
       </div>
     </>
