@@ -4,8 +4,9 @@ import { Inter } from 'next/font/google'
 import '@/styles/globals.css'
 
 import { siteConfig } from '@/config/site'
-import { ThemeProvider } from '@/components/theme-provider'
+import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/sonner'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,10 +32,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-
   return (
     <html lang='en' suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={cn('antialiased', inter.className)}>
         <ThemeProvider attribute='class' defaultTheme='system'>
           {children}
           <Toaster position='bottom-center' />
