@@ -27,7 +27,7 @@ export default async function Home() {
 
   return (
     <div>
-      <section className='flex items-center space-x-2 border-b border-muted-foreground/40 pb-2 pt-4 '>
+      <section className='flex space-x-2 border-b border-muted-foreground/40 pb-2 pt-4 '>
         <CreateThread session={session} />
       </section>
 

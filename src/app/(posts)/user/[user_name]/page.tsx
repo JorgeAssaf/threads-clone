@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
@@ -38,20 +39,13 @@ export default async function UserPage() {
             </p>
           </div>
           <div>
-            <Avatar className='size-9'>
-              <AvatarImage
-                src={session.user?.user_metadata?.avatar_url}
-                alt={session.user?.user_metadata?.full_name}
-              />
-              <AvatarFallback>
-                {session.user?.user_metadata?.full_name
-                  .split(' ')[0]
-                  .charAt(0) +
-                  session.user?.user_metadata?.full_name
-                    .split(' ')[1]
-                    .charAt(0)}
-              </AvatarFallback>
-            </Avatar>
+            <Image
+              src={session.user?.user_metadata?.avatar_url}
+              alt={session.user?.user_metadata?.full_name}
+              width={84}
+              height={84}
+              className='rounded-full'
+            />
           </div>
         </div>
         {posts
