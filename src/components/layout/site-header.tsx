@@ -13,7 +13,7 @@ export interface User {
 export const SiteHeader = ({ user }: User) => {
   return (
     <header className='sticky top-0 z-40 w-full bg-[#101010]/85 backdrop-blur-xl'>
-      <div className='mx-auto grid h-[3.75rem] w-[63%] grid-cols-[1fr,50vw,1fr]  grid-rows-1 items-center md:h-[4.625rem] md:grid-cols-[1fr,max-content,1fr]'>
+      <div className='container mx-auto grid h-[3.75rem] grid-cols-[1fr,50vw,1fr] grid-rows-1 items-center md:h-[4.625rem] md:grid-cols-[1fr,max-content,1fr] lg:w-[63%]'>
         <div className='col-start-2 mx-auto md:col-start-1 md:mx-0'>
           <Link href='/'>
             <ThreadsLogo className='transition-transform duration-200 hover:scale-110' />
