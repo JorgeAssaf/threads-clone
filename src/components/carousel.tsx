@@ -113,7 +113,7 @@ const CarouselContent = forwardRef<
       <div
         ref={ref}
         className={cn(
-          'flex justify-start transition-[height] duration-500 ease-in-out',
+          'flex justify-start',
           orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',
           className,
         )}
