@@ -3,9 +3,8 @@ import { redirect } from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
 import { type Database } from '@/types/database.types'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { CreateThread } from '@/components/create-thread'
-import { ImageCarousel } from '@/components/image-carousel'
+import { PostCard } from '@/components/post-card'
 
 export default async function Home() {
   const cookieStore = cookies()
@@ -32,36 +31,9 @@ export default async function Home() {
       </section>
 
       <section>
-        {posts
-          ? posts.map((post) => {
-            return (
-              <div
-                key={post.id}
-                className='grid grid-cols-[46px,minmax(0,1fr)] grid-rows-[21px,19px,maxcontent,maxcontent] items-start border-b border-muted-foreground/20 py-3'
-              >
-                <Avatar className='size-9'>
-                  <AvatarImage
-                    src={post.users?.avatar_url ?? ''}
-                    alt={post.users?.full_name ?? ''}
-                  />
-                  <AvatarFallback>
-                    {session.user?.user_metadata?.full_name
-                      .split(' ')[0]
-                      .charAt(0) +
-                      session.user?.user_metadata?.full_name
-                        .split(' ')[1]
-                        .charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className=''>
-                  <h2 className='text-primary'>{post.users?.full_name}</h2>
-                  <p>{post.text}</p>
-                  <ImageCarousel images={post.images} />
-                </div>
-              </div>
-            )
-          })
-          : null}
+        {posts.map((post) => (
+          <PostCard key={post.id} session={session} post={post} />
+        ))}
       </section>
     </div>
   )

@@ -7,7 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <section className='relative'>
-      <picture className='mx-auto h-full w-full'>
+      <picture className='mx-auto size-full'>
         <source srcSet='/images/threads.webp' type='image/webp' />
         <Image
           src='/images/threads-image.webp'
@@ -16,7 +16,7 @@ export default function RootLayout({
           loading='eager'
           width='1715'
           height='510'
-          className='absolute top-0 mx-auto aspect-[1715/510] h-[510px] w-[1715px] object-cover -z-10'
+          className='absolute top-0 -z-10 mx-auto aspect-[1715/510] h-[510px] w-[1715px] object-cover'
         />
       </picture>
       {children}

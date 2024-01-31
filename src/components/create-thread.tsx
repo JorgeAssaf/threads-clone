@@ -75,9 +75,8 @@ export const CreateThread = ({ session }: { session: Session }) => {
 
       <div className='w-full cursor-pointer'>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild >
+          <DialogTrigger asChild>
             <div className='flex items-center justify-between space-x-2'>
-
               <Button
                 onClick={() => setOpen(true)}
                 variant='ghost'
@@ -86,10 +85,7 @@ export const CreateThread = ({ session }: { session: Session }) => {
                 Start a thread
               </Button>
 
-
-              <Button
-                disabled
-                className='rounded-xl font-semibold px-4 py-1'>
+              <Button disabled className='rounded-xl px-4 py-1 font-semibold'>
                 Post
               </Button>
             </div>
@@ -155,12 +151,11 @@ export const CreateThread = ({ session }: { session: Session }) => {
                               urls.push({ url: publicUrl, type: image.type })
                             }
                           }
-
+                          setOpen(false)
                           toast.promise(addPost(formData, urls), {
                             loading: 'Posting...',
                             success: () => {
                               formRef.current?.reset()
-                              setOpen(false)
                               setSelectedFile(null)
                               return 'Posted!'
                             },
@@ -254,7 +249,6 @@ export const CreateThread = ({ session }: { session: Session }) => {
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
-
         </Dialog>
       </div>
     </>

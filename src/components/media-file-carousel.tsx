@@ -10,7 +10,7 @@ interface ImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   images: ImagesFile[] | null
 }
 
-export const ImageCarousel = ({ images, ...props }: ImageCarouselProps) => {
+export const MediaFileCarousel = ({ images, ...props }: ImageCarouselProps) => {
   return (
     <div {...props}>
       <Carousel opts={{ dragFree: true }}>
@@ -20,13 +20,13 @@ export const ImageCarousel = ({ images, ...props }: ImageCarouselProps) => {
               return (
                 <CarouselItem
                   key={`image-${i}+${url}`}
-                  className={cn('basis-auto rounded-md py-5 ')}
+                  className={cn('basis-auto rounded-md py-3 ')}
                 >
                   {url.type === 'video/mp4' ? (
                     <video
                       controls
                       playsInline
-                      className=' aspect-[9/16] h-full max-h-[430px] w-full rounded-md object-cover object-center align-super
+                      className=' aspect-[9/16] size-full max-h-[430px] rounded-md object-cover object-center align-super
                       '
                       src={url.url}
                     ></video>
@@ -37,11 +37,10 @@ export const ImageCarousel = ({ images, ...props }: ImageCarouselProps) => {
                       <img
                         src={url.url}
                         alt='zoom image'
-                        width={306}
-                        loading='lazy'
-                        height={600}
+                        width='600px'
+                        height='600px'
                         className={cn(
-                          'aspect-[9/16] h-full max-h-[430px] w-full rounded-md object-cover object-center align-super',
+                          'aspect-[9/16] size-full max-h-[430px] rounded-md object-cover object-center align-super',
                         )}
                       />
                     </ZoomImage>

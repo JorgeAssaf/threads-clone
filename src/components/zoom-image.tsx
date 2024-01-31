@@ -1,6 +1,5 @@
 'use client'
 
-import { PlusIcon, X } from 'lucide-react'
 import MediumZoom from 'react-medium-image-zoom'
 
 import 'react-medium-image-zoom/dist/styles.css'
@@ -33,8 +32,6 @@ export const ZoomImage = ({
   return (
     <MediumZoom
       wrapElement='div'
-      IconZoom={PlusIcon}
-      IconUnzoom={X}
       classDialog='zoom-image'
       zoomMargin={30}
       a11yNameButtonZoom='Zoom'

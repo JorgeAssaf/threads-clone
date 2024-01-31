@@ -22,7 +22,7 @@ export default async function PostsLayout({
   return (
     <div className='relative flex min-h-screen flex-col'>
       <SiteHeader user={session.user?.user_metadata?.user_name} />
-      <main className='flex-1 container max-w-[624px] px-6'>{children}</main>
+      <main className='container max-w-[624px] flex-1 px-6'>{children}</main>
       {/* <SiteFooter /> */}
     </div>
   )
