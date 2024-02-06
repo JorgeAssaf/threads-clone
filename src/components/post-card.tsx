@@ -1,19 +1,23 @@
-import { type Session } from '@supabase/auth-helpers-nextjs'
+import { notFound } from 'next/navigation'
 
 import { type Database } from '@/types/database.types'
 
 import { MediaFileCarousel } from './media-file-carousel'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
-import { notFound } from 'next/navigation'
 
-type PostEntity = Database['public']['Tables']['threads']['Row']
-type UserEntity = Database['public']['Tables']['users']['Row'] | null
+type PostEntity = Pick<
+  Database['public']['Tables']['threads']['Row'],
+  'id' | 'text' | 'images' | 'created_at'
+> | null
+type UserEntity = Pick<
+  Database['public']['Tables']['users']['Row'],
+  'full_name' | 'user_name' | 'avatar_url'
+> | null
 export interface PostCardProps {
   post: PostEntity & { users: UserEntity }
-  session: Session
 }
 
-export const PostCard = ({ post, session }: PostCardProps) => {
+export const PostCard = ({ post }: PostCardProps) => {
   if (!post) {
     return notFound()
   }
@@ -25,8 +29,7 @@ export const PostCard = ({ post, session }: PostCardProps) => {
           alt={post.users?.full_name ?? ''}
         />
         <AvatarFallback>
-          {session.user?.user_metadata?.full_name.split(' ')[0].charAt(0) +
-            session.user?.user_metadata?.full_name.split(' ')[1].charAt(0)}
+          {post.users?.user_name?.charAt(0).toUpperCase()}
         </AvatarFallback>
       </Avatar>
       <div>

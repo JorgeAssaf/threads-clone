@@ -10,7 +10,7 @@ export default async function PostsLayout({
 }: React.PropsWithChildren) {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({
-    cookies: () => cookieStore
+    cookies: () => cookieStore,
   })
   const {
     data: { session },
@@ -27,4 +27,3 @@ export default async function PostsLayout({
     </div>
   )
 }
-

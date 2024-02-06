@@ -1,11 +1,11 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { ChevronRight } from 'lucide-react'
 
-import { Button } from './ui/button'
-import { useRouter } from 'next/navigation'
 import { Github } from './icons'
+import { Button } from './ui/button'
 
 export function LoginButton() {
   const router = useRouter()
@@ -19,7 +19,6 @@ export function LoginButton() {
       },
     })
     router.refresh()
-
   }
 
   return (

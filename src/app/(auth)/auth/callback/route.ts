@@ -1,6 +1,6 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { type NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 
 // esto es una opción de Next.js, para evitar que cachee de forma
 // estática la ruta, y que siempre se ejecute en el servidor

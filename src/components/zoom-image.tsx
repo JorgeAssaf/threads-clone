@@ -4,13 +4,11 @@ import MediumZoom from 'react-medium-image-zoom'
 
 import 'react-medium-image-zoom/dist/styles.css'
 
-
 // interface ZoomContentProps {
 //   img: React.ReactElement | null;
 //   buttonUnzoom: React.ReactElement<HTMLButtonElement>;
 //   onUnzoom: () => void;
 // }
-
 
 // const ZoomContent = ({ img, buttonUnzoom, onUnzoom }: ZoomContentProps) => {
 
@@ -38,6 +36,6 @@ export const ZoomImage = ({
       a11yNameButtonUnzoom='Unzoom'
     >
       {children}
-    </MediumZoom >
+    </MediumZoom>
   )
 }
