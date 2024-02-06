@@ -9,9 +9,8 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'qylqlexictanfemoyyrn.supabase.co',
-      }
+      },
     ],
   },
 }
 module.exports = nextConfig
-
