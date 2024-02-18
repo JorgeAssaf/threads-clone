@@ -35,7 +35,7 @@ export default async function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={cn('antialiased', inter.className)}>
-        <ThemeProvider attribute='class' defaultTheme='system'>
+        <ThemeProvider attribute='class' defaultTheme='dark'>
           {children}
           <Toaster position='bottom-center' />
         </ThemeProvider>
